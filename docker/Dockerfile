@@ -6,4 +6,5 @@ RUN apt update && \
     rm -rf /var/lib/apt/lists/*
 
 RUN rustup target add x86_64-unknown-none
+
 RUN rustup component add rust-src
