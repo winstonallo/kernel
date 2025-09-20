@@ -3,11 +3,19 @@ use core::fmt;
 use lazy_static::lazy_static;
 use spin::Mutex;
 
+enum SendError {
+    WouldBlock,
+}
+
 pub struct SerialPort {
     base: u16,
 }
 
 impl SerialPort {
+    /// # Safety
+    /// It is the caller's responsibility to ensure that the passed base address
+    /// points to a serial port device, and that the caller has the permission
+    /// perform the I/O operation.
     pub const unsafe fn new(base: u16) -> Self {
         Self { base }
     }
@@ -57,11 +65,11 @@ impl SerialPort {
         }
     }
 
-    pub fn send_raw(&mut self, data: u8) {
+    fn send_raw(&mut self, data: u8) {
         crate::retry_until_ok!(self.try_send_raw(data))
     }
 
-    pub fn try_send_raw(&mut self, data: u8) -> Result<(), ()> {
+    fn try_send_raw(&mut self, data: u8) -> Result<(), SendError> {
         if (self.line_status() >> 5) & 1 == 1 {
             unsafe {
                 use crate::port::Port;
@@ -69,21 +77,21 @@ impl SerialPort {
             }
             Ok(())
         } else {
-            Err(())
+            Err(SendError::WouldBlock)
         }
     }
 
     pub fn init(&mut self) {
         use crate::port::Port;
         unsafe {
-            Port::new(self.port_interrupt_enable()).write(0x00 as u32);
-            Port::new(self.port_line_control()).write(0x80 as u32);
-            Port::new(self.port_data()).write(0x03 as u32);
-            Port::new(self.port_interrupt_enable()).write(0x03 as u32);
-            Port::new(self.port_line_control()).write(0x03 as u32);
-            Port::new(self.port_fifo_control()).write(0xc7 as u32);
-            Port::new(self.port_modem_control()).write(0x0b as u32);
-            Port::new(self.port_interrupt_enable()).write(0x01 as u32);
+            Port::new(self.port_interrupt_enable()).write(0x00_u32);
+            Port::new(self.port_line_control()).write(0x80_u32);
+            Port::new(self.port_data()).write(0x03_u32);
+            Port::new(self.port_interrupt_enable()).write(0x03_u32);
+            Port::new(self.port_line_control()).write(0x03_u32);
+            Port::new(self.port_fifo_control()).write(0xc7_u32);
+            Port::new(self.port_modem_control()).write(0x0b_u32);
+            Port::new(self.port_interrupt_enable()).write(0x01_u32);
         }
     }
 }

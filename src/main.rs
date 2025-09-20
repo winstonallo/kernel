@@ -12,5 +12,6 @@ pub extern "C" fn _start() -> ! {
     printkln!("Hello, World{}", "!");
     #[cfg(test)]
     test_main();
+    #[allow(clippy::empty_loop)]
     loop {}
 }

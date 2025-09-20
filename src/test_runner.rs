@@ -10,7 +10,7 @@ impl<T> Testable for T
 where
     T: Fn(),
 {
-    fn run(&self) -> () {
+    fn run(&self) {
         serial_print!("{}...\t", core::any::type_name::<T>());
         self();
         serial_println!("[ok]");
@@ -23,6 +23,7 @@ pub fn panic_handler(info: &PanicInfo) -> ! {
     serial_println!("[failed]");
     serial_println!("Error: {}", info);
     exit(qemu::ExitCode::Failure);
+    #[allow(clippy::empty_loop)]
     loop {}
 }
 
