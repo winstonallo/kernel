@@ -1,4 +1,4 @@
-name: Build & push runner image
+name: docker build & push
 on:
     push:
         branches: ["*"]
