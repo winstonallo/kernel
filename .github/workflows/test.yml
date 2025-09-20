@@ -1,0 +1,7 @@
+name: Inte
+on: [push]
+jobs:
+    run-cargo-test:
+        runs-on: debian-latest
+        steps:
+            - run: apt install qemu-system-x86_64
