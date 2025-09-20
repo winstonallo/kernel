@@ -4,4 +4,14 @@ jobs:
     run-cargo-test:
         runs-on: ubuntu-latest
         steps:
-            - run: apt install qemu-system-x86_64
+            - name: Checkout code
+              uses: actions/checkout@v4
+
+            - name: Update package list
+            - run: sudo apt update
+
+            - name: Install QEMU
+              run: sudo apt install -y qemu-system-x86_64
+
+            - name: Run tests
+              run: cargo test
