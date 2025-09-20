@@ -6,5 +6,6 @@ RUN apt update && \
     rm -rf /var/lib/apt/lists/*
 
 RUN rustup target add x86_64-unknown-none
-
 RUN rustup component add rust-src
+RUN rustup component add llvm-tools-preview
+RUN cargo install bootimage
