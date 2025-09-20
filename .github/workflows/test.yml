@@ -3,6 +3,10 @@ on: [push]
 jobs:
     run-cargo-test:
         runs-on: ubuntu-latest
+        strategy:
+            matrix:
+                toolchain:
+                    - nightly
         steps:
             - name: Checkout code
               uses: actions/checkout@v4
