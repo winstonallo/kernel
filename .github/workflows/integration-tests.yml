@@ -13,10 +13,6 @@ jobs:
         runs-on: ubuntu-latest
         container: ghcr.io/winstonallo/kernel-test-runner
 
-        strategy:
-            matrix:
-                toolchain:
-                    - nightly
         steps:
             - name: Checkout code
               uses: actions/checkout@v4
