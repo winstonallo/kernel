@@ -7,7 +7,7 @@ on:
             - tests/**
             - Cargo.toml
             - Cargo.lock
-            - .github/clippy.yml
+            - .github/workflows/clippy.yml
 jobs:
     run-cargo-test:
         runs-on: ubuntu-latest

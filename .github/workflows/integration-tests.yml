@@ -7,7 +7,7 @@ on:
             - tests/**
             - Cargo.toml
             - Cargo.lock
-            - .github/integration-tests.yml
+            - .github/workflows/integration-tests.yml
 jobs:
     run-cargo-test:
         runs-on: ubuntu-latest
