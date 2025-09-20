@@ -1,5 +1,8 @@
 name: Integration Tests
-on: [push]
+on:
+    push:
+        paths:
+            - ./asd
 jobs:
     run-cargo-test:
         runs-on: ubuntu-latest
