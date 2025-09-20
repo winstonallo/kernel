@@ -11,7 +11,7 @@ jobs:
               run: sudo apt update
 
             - name: Install QEMU
-              run: sudo apt install -y qemu-system-x86_64
+              run: sudo apt install -y qemu-system-x86-64
 
             - name: Run tests
               run: cargo test
