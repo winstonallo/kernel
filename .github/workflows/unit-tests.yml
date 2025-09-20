@@ -1,0 +1,36 @@
+name: Unit Tests
+on:
+    push:
+        branches: ["*"]
+        paths:
+            - src/**
+            - tests/**
+            - Cargo.toml
+            - Cargo.lock
+            - .github/unit-tests.yml
+jobs:
+    run-cargo-test:
+        runs-on: ubuntu-latest
+        container: ghcr.io/winstonallo/kernel-test-runner
+
+        strategy:
+            matrix:
+                toolchain:
+                    - nightly
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+
+            - name: debug
+              run: |
+                  echo "Current directory: $(pwd)"
+                  echo "Rust version: $(rustc --version)"
+                  echo "Cargo version: $(cargo --version)"
+                  echo "Target file exists: $(test -f x86_64-winstonallo-kernel.json && echo yes || echo no)"
+                  echo "Target file contents:"
+                  cat x86_64-winstonallo-kernel.json
+                  echo "Available targets:"
+                  rustc --print target-list | grep x86_64 | head -5
+
+            - name: Run tests
+              run: cargo test --lib
