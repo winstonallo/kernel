@@ -5,7 +5,7 @@ on:
 jobs:
     run-cargo-test:
         runs-on: ubuntu-latest
-        container: image:ghcr.io/winstonallo/kernel-test-runner
+        container: ghcr.io/winstonallo/kernel-test-runner
 
         strategy:
             matrix:
