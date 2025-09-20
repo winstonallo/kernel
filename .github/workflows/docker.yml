@@ -2,11 +2,11 @@ name: Build & push runner image
 on:
     push:
         branches: ["*"]
-        # paths:
-        #     - "docker/Dockerfile"
+        paths:
+            - "docker/Dockerfile"
 env:
     REGISTRY: ghcr.io
-    IMAGE_NAME: ${{ github.repository }}
+    IMAGE_NAME: ${{ github.repository }}-runner
 
 jobs:
     build-push:
