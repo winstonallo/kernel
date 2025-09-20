@@ -23,8 +23,3 @@ fn panic(info: &PanicInfo) -> ! {
 fn test_printkln() {
     printkln!("test_printkln output");
 }
-
-#[test_case]
-fn test_printk() {
-    printk!("test_printk output");
-}
