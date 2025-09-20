@@ -6,7 +6,7 @@
 
 use core::panic::PanicInfo;
 
-use kernel::printkln;
+use kernel::{printk, printkln};
 
 #[unsafe(no_mangle)]
 pub extern "C" fn _start() -> ! {
@@ -22,4 +22,9 @@ fn panic(info: &PanicInfo) -> ! {
 #[test_case]
 fn test_printkln() {
     printkln!("test_printkln output");
+}
+
+#[test_case]
+fn test_printk() {
+    printk!("test_printk output");
 }
