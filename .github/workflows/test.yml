@@ -2,11 +2,11 @@ name: Integration Tests
 on:
     push:
         branches: ["*"]
-        paths:
-            - ./src/**
-            - ./tests/**
-            - "Cargo.toml"
-            - "Cargo.lock"
+        # paths:
+        #     - src/**
+        #     - tests/**
+        #     - "Cargo.toml"
+        #     - "Cargo.lock"
 jobs:
     run-cargo-test:
         runs-on: ubuntu-latest
