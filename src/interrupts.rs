@@ -17,5 +17,6 @@ pub fn init_idt() {
 
 extern "C" fn divide_by_zero_handler() -> ! {
     printkln!("EXCEPTION: DIVIDE BY ZERO");
+    #[allow(clippy::empty_loop)]
     loop {}
 }

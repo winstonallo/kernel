@@ -67,12 +67,10 @@ impl Entry {
 #[derive(Debug, Clone, Copy)]
 pub struct EntryOptions(u16);
 
+#[allow(unused)]
 impl EntryOptions {
     fn new() -> Self {
-        Self::minimal()
-            .set_present(true)
-            .disable_interrupts(true)
-            .clone()
+        *Self::minimal().set_present(true).disable_interrupts(true)
     }
 
     fn minimal() -> Self {
