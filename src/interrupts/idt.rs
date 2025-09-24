@@ -4,16 +4,21 @@ use x86_64::structures::gdt::SegmentSelector;
 use x86_64::{PrivilegeLevel, VirtAddr};
 
 pub type HandlerFunc = extern "C" fn() -> !;
-pub struct InterruptDescriptorTable([Entry; 16]);
+
+pub struct InterruptDescriptorTable {
+    entries: [Entry; 16],
+}
 
 impl InterruptDescriptorTable {
     pub fn new() -> Self {
-        Self([Entry::missing(); 16])
+        Self {
+            entries: [Entry::missing(); 16],
+        }
     }
 
     pub fn set_handler(&mut self, entry: u8, handler: HandlerFunc) -> &mut EntryOptions {
-        self.0[entry as usize] = Entry::new(segmentation::CS::get_reg(), handler);
-        &mut self.0[entry as usize].options
+        self.entries[entry as usize] = Entry::new(segmentation::CS::get_reg(), handler);
+        &mut self.entries[entry as usize].options
     }
 
     pub fn load(&'static self) {
