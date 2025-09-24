@@ -1,7 +1,6 @@
-use x86_64::instructions::segmentation;
-use x86_64::registers::segmentation::Segment;
-use x86_64::structures::gdt::SegmentSelector;
-use x86_64::{PrivilegeLevel, VirtAddr};
+use x86_64::VirtAddr;
+
+use crate::registers::{self, PrivilegeLevel, Register, SegmentSelector};
 
 pub type HandlerFunc = extern "C" fn() -> !;
 
@@ -17,7 +16,7 @@ impl InterruptDescriptorTable {
     }
 
     pub fn set_handler(&mut self, entry: u8, handler: HandlerFunc) -> &mut EntryOptions {
-        self.entries[entry as usize] = Entry::new(segmentation::CS::get_reg(), handler);
+        self.entries[entry as usize] = Entry::new(registers::CS::get(), handler);
         &mut self.entries[entry as usize].options
     }
 

@@ -12,6 +12,7 @@ pub mod interrupts;
 pub mod macros;
 pub mod port;
 pub mod qemu;
+pub mod registers;
 pub mod serial;
 pub mod test_runner;
 pub mod vga_buffer;
