@@ -6,14 +6,17 @@
 
 use kernel::{interrupts, printkln};
 mod panic;
+use macros::make_answer;
 
 fn divide_by_zero() {
     unsafe { core::arch::asm!("mov dx, 0; div dx") }
 }
 
+make_answer!();
+
 #[unsafe(no_mangle)]
 pub extern "C" fn _start() -> ! {
-    printkln!("Hello, World{}", "!");
+    printkln!("Hello, World! The answer is {}", answer());
 
     kernel::init();
 
