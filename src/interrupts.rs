@@ -3,6 +3,8 @@ use lazy_static::lazy_static;
 mod idt;
 use crate::{interrupts::idt::InterruptDescriptorTable, printkln};
 
+pub use idt::InterruptDescriptorTablePointer;
+
 lazy_static! {
     static ref IDT: InterruptDescriptorTable = {
         let mut idt = InterruptDescriptorTable::new();

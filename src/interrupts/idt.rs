@@ -1,11 +1,20 @@
-use x86_64::VirtAddr;
-
-use crate::registers::{self, PrivilegeLevel, Register, SegmentSelector};
+use crate::{
+    address::VirtualAddress,
+    instructions::lidt,
+    registers::{self, PrivilegeLevel, Register, SegmentSelector},
+};
 
 pub type HandlerFunc = extern "C" fn() -> !;
 
 pub struct InterruptDescriptorTable {
     entries: [Entry; 16],
+}
+
+#[derive(Debug, Clone, Copy)]
+#[repr(C, packed(2))]
+pub struct InterruptDescriptorTablePointer {
+    pub limit: u16,
+    pub base: VirtualAddress,
 }
 
 impl InterruptDescriptorTable {
@@ -21,14 +30,14 @@ impl InterruptDescriptorTable {
     }
 
     pub fn load(&'static self) {
-        use x86_64::instructions::tables::{DescriptorTablePointer, lidt};
-
-        let ptr = DescriptorTablePointer {
-            base: VirtAddr::new(self as *const _ as u64),
+        let ptr = InterruptDescriptorTablePointer {
+            base: VirtualAddress::new(self as *const _ as usize),
             limit: (core::mem::size_of::<Self>() - 1) as u16,
         };
 
-        unsafe { lidt(&ptr) };
+        unsafe {
+            lidt(&ptr);
+        };
     }
 }
 
