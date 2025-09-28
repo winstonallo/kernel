@@ -1,3 +1,5 @@
+use bitmap::bitmap;
+
 use crate::{
     address::VirtualAddress,
     instructions::lidt,
@@ -77,36 +79,25 @@ impl Entry {
     }
 }
 
-#[derive(Debug, Clone, Copy)]
-pub struct EntryOptions(u16);
+bitmap!(
+    struct EntryOptions {
+        present: u1,
+        privilege_level: u2,
+        zero1: u1,
+        gate_type: u4,
+        interrupts: u1,
+        zero2: u4,
+        stack_index: u3,
+    }
+);
 
 #[allow(unused)]
 impl EntryOptions {
     fn new() -> Self {
-        *Self::minimal().set_present(true).disable_interrupts(true)
+        *Self::minimal().set_present(1).set_interrupts(0)
     }
 
     fn minimal() -> Self {
         Self(0b111 << 9)
-    }
-
-    pub fn set_present(&mut self, present: bool) -> &mut Self {
-        self.0 |= (present as u16) << 15;
-        self
-    }
-
-    pub fn disable_interrupts(&mut self, disable: bool) -> &mut Self {
-        self.0 |= (!disable as u16) << 8;
-        self
-    }
-
-    pub fn set_privilege_level(&mut self, dpl: u16) -> &mut Self {
-        self.0 = (self.0 & !(0b11 << 13)) | ((dpl & 0b11) << 13);
-        self
-    }
-
-    pub fn set_stack_index(&mut self, index: u16) -> &mut Self {
-        self.0 = ((self.0 >> 3) << 3) | index;
-        self
     }
 }
