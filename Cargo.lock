@@ -15,6 +15,13 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "2261d10cca569e4643e526d8dc2e62e433cc8aba21ab764233731f8d369bf394"
 
 [[package]]
+name = "bitmap"
+version = "0.1.0"
+dependencies = [
+ "macros",
+]
+
+[[package]]
 name = "bootloader"
 version = "0.9.33"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -24,9 +31,9 @@ checksum = "7bdfddac270bbdd45903296bc1caf29a7fdce6b326aaf0bbab7f04c5f98b7447"
 name = "kernel"
 version = "0.1.0"
 dependencies = [
+ "bitmap",
  "bootloader",
  "lazy_static",
- "macros",
  "spin 0.5.2",
  "volatile 0.2.7",
  "x86_64",
@@ -45,6 +52,7 @@ dependencies = [
 name = "macros"
 version = "0.1.0"
 dependencies = [
+ "proc-macro2",
  "quote",
  "syn",
 ]

@@ -18,7 +18,7 @@ spin = "0.5.2"
 volatile = "0.2.6"
 lazy_static = { version = "1.0", features = ["spin_no_std"]}
 x86_64 = "0.15.2"
-macros = { path = "macros" }
+bitmap = { version = "0.1.0", path = "bitmap" }
 
 [package.metadata.bootimage]
 test-args = ["-device", "isa-debug-exit,iobase=0xf4,iosize=0x04", "-serial", "stdio", "-display", "none"]
