@@ -40,25 +40,19 @@ impl PortRead<u32> for u32 {
 
 impl PortWrite<u8> for u8 {
     fn write_to_port(port: u16, value: u8) {
-        unsafe {
-            core::arch::asm!("out dx, al", in("dx") port, in("al") value, options(nomem, nostack, preserves_flags))
-        }
+        unsafe { core::arch::asm!("out dx, al", in("dx") port, in("al") value, options(nomem, nostack, preserves_flags)) }
     }
 }
 
 impl PortWrite<u16> for u16 {
     fn write_to_port(port: u16, value: u16) {
-        unsafe {
-            core::arch::asm!("out dx, ax", in("dx") port, in("ax") value, options(nomem, nostack, preserves_flags))
-        }
+        unsafe { core::arch::asm!("out dx, ax", in("dx") port, in("ax") value, options(nomem, nostack, preserves_flags)) }
     }
 }
 
 impl PortWrite<u32> for u32 {
     fn write_to_port(port: u16, value: u32) {
-        unsafe {
-            core::arch::asm!("out dx, eax", in("dx") port, in("eax") value, options(nomem, nostack, preserves_flags))
-        }
+        unsafe { core::arch::asm!("out dx, eax", in("dx") port, in("eax") value, options(nomem, nostack, preserves_flags)) }
     }
 }
 
@@ -69,10 +63,7 @@ pub struct Port<T> {
 
 impl<T> Port<T> {
     pub fn new(port: u16) -> Port<T> {
-        Port {
-            port,
-            phantom: PhantomData,
-        }
+        Port { port, phantom: PhantomData }
     }
 }
 
