@@ -79,17 +79,16 @@ impl Entry {
     }
 }
 
-bitmap!(
-    struct EntryOptions {
-        present: u1,
-        privilege_level: u2,
-        zero1: u1,
-        gate_type: u4,
-        interrupts: u1,
-        zero2: u4,
-        stack_index: u3,
-    }
-);
+#[bitmap]
+struct EntryOptions {
+    present: u1,
+    privilege_level: u2,
+    zero1: u1,
+    gate_type: u4,
+    interrupts: u1,
+    zero2: u4,
+    stack_index: u3,
+}
 
 #[allow(unused)]
 impl EntryOptions {
