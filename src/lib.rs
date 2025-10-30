@@ -36,3 +36,8 @@ pub extern "C" fn _start() -> ! {
     test_main();
     loop {}
 }
+
+#[test_case]
+fn test_breakpoint_exception() {
+    x86_64::instructions::interrupts::int3();
+}

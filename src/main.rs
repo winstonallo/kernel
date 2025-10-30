@@ -18,11 +18,10 @@ pub extern "C" fn _start() -> ! {
     #[cfg(test)]
     test_main();
 
-    interrupts::init_idt();
-
-    divide_by_zero();
+    x86_64::instructions::interrupts::int3();
 
     printkln!("It did not crash");
+
     #[allow(clippy::empty_loop)]
     loop {}
 }
