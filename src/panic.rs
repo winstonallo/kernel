@@ -9,7 +9,7 @@ fn panic(info: &PanicInfo) -> ! {
     use crate::printkln;
 
     printkln!("{info}");
-    loop {}
+    kernel::hlt_loop();
 }
 
 #[cfg(test)]

@@ -23,8 +23,7 @@ pub fn panic_handler(info: &PanicInfo) -> ! {
     serial_println!("[failed]");
     serial_println!("Error: {}", info);
     exit(qemu::ExitCode::Failure);
-    #[allow(clippy::empty_loop)]
-    loop {}
+    crate::hlt_loop();
 }
 
 pub fn test_runner(tests: &[&dyn Testable]) {

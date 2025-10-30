@@ -14,8 +14,7 @@ pub extern "C" fn _start() -> ! {
     #[cfg(test)]
     test_main();
 
-    printkln!("It did not crash");
+    printkln!("42");
 
-    #[allow(clippy::empty_loop)]
-    loop {}
+    kernel::hlt_loop();
 }
