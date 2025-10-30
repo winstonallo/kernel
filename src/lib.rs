@@ -8,10 +8,14 @@
 #[cfg(test)]
 use core::panic::PanicInfo;
 
+#[cfg(test)]
+use bootloader::{BootInfo, entry_point};
+
 pub mod address;
 pub mod gdt;
 pub mod interrupts;
 pub mod macros;
+pub mod memory;
 pub mod port;
 pub mod qemu;
 pub mod registers;
@@ -39,8 +43,11 @@ fn panic(info: &PanicInfo) -> ! {
 }
 
 #[cfg(test)]
+entry_point!(test_kernel_main);
+
+#[cfg(test)]
 #[unsafe(no_mangle)]
-pub extern "C" fn _start() -> ! {
+fn test_kernel_main(_: &'static BootInfo) -> ! {
     init();
     test_main();
     loop {}
