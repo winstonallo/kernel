@@ -4,12 +4,8 @@
 #![no_main]
 #![reexport_test_harness_main = "test_main"]
 
-use kernel::{interrupts, printkln};
+use kernel::printkln;
 mod panic;
-
-fn divide_by_zero() {
-    unsafe { core::arch::asm!("mov dx, 0; div dx") }
-}
 
 #[unsafe(no_mangle)]
 pub extern "C" fn _start() -> ! {
@@ -18,7 +14,9 @@ pub extern "C" fn _start() -> ! {
     #[cfg(test)]
     test_main();
 
-    x86_64::instructions::interrupts::int3();
+    unsafe {
+        *(0xdeadbeef as *mut u8) = 42;
+    };
 
     printkln!("It did not crash");
 

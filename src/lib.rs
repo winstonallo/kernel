@@ -9,7 +9,6 @@
 use core::panic::PanicInfo;
 
 pub mod address;
-pub mod instructions;
 pub mod interrupts;
 pub mod macros;
 pub mod port;
