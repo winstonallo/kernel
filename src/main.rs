@@ -14,10 +14,6 @@ pub extern "C" fn _start() -> ! {
     #[cfg(test)]
     test_main();
 
-    unsafe {
-        *(0xdeadbeef as *mut u8) = 42;
-    };
-
     printkln!("It did not crash");
 
     #[allow(clippy::empty_loop)]

@@ -9,6 +9,7 @@
 use core::panic::PanicInfo;
 
 pub mod address;
+pub mod gdt;
 pub mod interrupts;
 pub mod macros;
 pub mod port;
@@ -20,6 +21,7 @@ pub mod vga_buffer;
 
 pub fn init() {
     interrupts::init_idt();
+    gdt::init();
 }
 
 #[cfg(test)]
